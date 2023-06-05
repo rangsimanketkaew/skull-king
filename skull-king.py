@@ -21,15 +21,26 @@ class Deck:
     """
 
     def __init__(self, players: int, round: int) -> None:
+        # card parameters
         self.num_players = players
         self.round = round
         self.values = []
         self.colors = []
         self.deck = []
+        # player parameters
+        self.players = { player+1 : [] for player in range(self.num_players)}
+        self.players_scores = { player+1 : 0 for player in range(self.num_players)}
 
     @staticmethod
     def print_card(my_cards):
         print(my_cards)
+
+    def start(self):
+        self.form_deck()
+        self.check_card()
+        self.random_deck()
+        # self.print_card(card.deck)
+        self.distribute_card()
 
     def form_deck(self):
         # Normal cards
@@ -38,9 +49,9 @@ class Deck:
 
         # Special cards
         special_cards = [
-            "white_flags",
-            "white_flags",
-            "white_flags",
+            "white_flag",
+            "white_flag",
+            "white_flag",
             "mermaid",
             "mermaid",
             "king",
@@ -64,22 +75,41 @@ class Deck:
         random.shuffle(self.deck)
 
     def distribute_card(self):
-        self.players = { player+1 : [] for player in range(self.num_players)}
+        
         # Split the decks
         self.actual_deck = self.deck[:self.num_players*self.round]
         # Let's distribute card
         for i in range(self.num_players):
             self.players[i+1] = self.actual_deck[i::self.num_players]
 
+    def scoring(self):
+        return None
+
+    def compare_card(self):
+        return None
+    
+    def play(self):
+        # loop over round
+        for r in range(self.round):
+            # loop over player
+            for p in range(self.players):
+                card = None
+                while card is None:
+                    try:
+                        card = int(input("Which one? "))
+                    except ValueError:
+                        print("Try again!")
+                        pass
+                return None
+
 round = 5
 num_players = 5
 card = Deck(players=num_players, round=round)
-card.form_deck()
-card.check_card()
-card.random_deck()
-# card.print_card(card.deck)
-card.distribute_card()
+card.start()
 
 print("Round: ", round)
 print("Number of players: ", num_players)
 pp.pprint(card.players)
+print("")
+
+card.play()
