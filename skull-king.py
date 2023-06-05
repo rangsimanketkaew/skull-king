@@ -91,16 +91,26 @@ class Deck:
     def play(self):
         # loop over round
         for r in range(self.round):
+            print(f"Round {r+1}")
+            print("=======")
             # loop over player
-            for p in range(self.players):
+            for p in range(self.num_players):
+                print(f"Player {p+1}")
                 card = None
                 while card is None:
                     try:
-                        card = int(input("Which one? "))
+                        card = int(input("  Which one? "))
                     except ValueError:
                         print("Try again!")
                         pass
-                return None
+            print("Round's score: ")
+            print("The winner is: ")
+            print("")
+
+        print("Total score:")
+        print("The winner is !!!!")
+
+        return None
 
 round = 5
 num_players = 5
