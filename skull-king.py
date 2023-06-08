@@ -28,12 +28,12 @@ class Deck:
         self.colors = []
         self.deck = []
         # player parameters
-        self.players = { player+1 : [] for player in range(self.num_players)}
+        self.player_cards = { player+1 : [] for player in range(self.num_players)}
         self.players_scores = { player+1 : 0 for player in range(self.num_players)}
 
     @staticmethod
     def print_card(my_cards):
-        print(my_cards)
+        pp.pprint(my_cards)
 
     def start(self):
         self.form_deck()
@@ -75,12 +75,11 @@ class Deck:
         random.shuffle(self.deck)
 
     def distribute_card(self):
-        
         # Split the decks
         self.actual_deck = self.deck[:self.num_players*self.round]
         # Let's distribute card
         for i in range(self.num_players):
-            self.players[i+1] = self.actual_deck[i::self.num_players]
+            self.player_cards[i+1] = self.actual_deck[i::self.num_players]
 
     def scoring(self):
         return None
@@ -93,7 +92,11 @@ class Deck:
         for r in range(self.round):
             print(f"Round {r+1}")
             print("=======")
+            print("Cards to lay:")
+            self.print_card(self.player_cards)
+            print("")
             # loop over player
+            card_round = []
             for p in range(self.num_players):
                 print(f"Player {p+1}")
                 card = None
@@ -103,6 +106,12 @@ class Deck:
                     except ValueError:
                         print("Try again!")
                         pass
+                # store card that each player lays
+                card_round.append(self.player_cards[p+1][card-1])
+                self.player_cards[p+1].pop(card-1)
+
+            print("")
+            print("Players' cards", card_round)
             print("Round's score: ")
             print("The winner is: ")
             print("")
@@ -119,7 +128,7 @@ card.start()
 
 print("Round: ", round)
 print("Number of players: ", num_players)
-pp.pprint(card.players)
+pp.pprint(card.player_cards)
 print("")
 
 card.play()
